@@ -12,6 +12,7 @@ import com.jeremyliao.liveeventbus.LiveEventBus
 
   object  RxEventBus :RxEventInterface{
 
+    //添加测试代码
     override fun <T> post(key: String, value: T) {
         LiveEventBus.get<T>(key).post(value)
     }
