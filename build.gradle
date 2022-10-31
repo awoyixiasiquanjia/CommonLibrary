@@ -5,6 +5,10 @@ plugins {
 }
 
 android {
+
+    publishing {
+        singleVariant("release")
+    }
     compileSdk 32
 
     defaultConfig {
@@ -32,22 +36,19 @@ android {
 
 }
 
+task generateSourcesJar(type: Jar){
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
 afterEvaluate {
     publishing {
         publications {
-//                release(MavenPublication) {
-//                    // Applies the component for the release build variant.
-//                    from components.release
-//                    // You can then customize attributes of the publication as shown below.
-//                    groupId = 'com.example.commonlibrary'
-//                    artifactId = 'base'
-//                    version = '1.0.3'
-//                }
-            debug(MavenPublication) {
-                from components.debug
-                groupId = 'com.example.commonlibrary'
-                artifactId = 'final-debug'
-                version = '1.0.3'
+            release(MavenPublication) {
+                from components.release         // 表示发布 release（jitpack 都不会使用到）
+                groupId = 'com.example.commonlibrary' // 这个是依赖库的组 id
+                artifactId = 'commonlibrary'       // 依赖库的名称（jitpack 都不会使用到）
+                version ="1.0.5"                //当前版本依赖库版本号，这个jitpack不会使用到，只是我们开发者自己查看
             }
         }
     }
